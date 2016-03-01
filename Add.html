@@ -1,0 +1,127 @@
+﻿<div>
+    <form name="exampleForm" class="form-horizontal" role="form">
+    <div class="page-header">
+        <h1>
+            {{PageName}}</h1>
+    </div>
+    <div class="form-group">
+        <div class="control-label  col-md-2">
+            <label>
+                First Name :</label>
+        </div>
+        <div class="col-md-3">
+            
+            <input type="text" name="fname" class="form-control" placeholder="Enter First Name"
+                ng-model="stud.fname" required />
+          </div>
+            <div class="form-group" ng-messages="exampleForm.fname.$error" ng-show="exampleForm.fname.$touched && exampleForm.fname.$invalid">
+                <p ng-message="required">
+                    This field is required
+                </p>
+            </div>
+        
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Last Name :</b></div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Enter Last Name" ng-model="stud.lname" required>
+        </div>
+         <div class="form-group" ng-messages="exampleForm.fname.$error" ng-show="exampleForm.fname.$touched && exampleForm.fname.$invalid">
+            <p ng-message="required">This field is required </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Birth date :</b></div>
+        <div class="col-md-3">
+            <input type="date" class="form-control" ng-model="stud.bday">
+        </div>
+    </div>
+
+     <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Country :</b></div>
+        <div class="col-md-3">
+            <select name="ddlCountry" class="form-control" ng-model="stud.address.country" ng-options="country as country.Country_Description for country in countryList track by country.pk_Country_ID" required>
+                <option value="">-----selected-----</option>
+            </select>
+        </div>
+         <div class="form-group" ng-messages="exampleForm.ddlCountry.$error" ng-show="exampleForm.ddlCountry.$touched && exampleForm.ddlCountry.$invalid">
+            <p ng-message="required">This field is required </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>State :</b></div>
+        <div class="col-md-3">
+            <select class="form-control" ng-model="stud.address.state" ng-disabled="!stud.address.country"
+                ng-options="state as state.State_Name for state in stateList|filter:{Country_ID:stud.address.country.pk_Country_ID}:true track by state.State_ID">
+                <option value="">------Select------</option>
+            </select>
+        </div>
+    </div>
+
+     <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>District :</b></div>
+        <div class="col-md-3">
+            <select class="form-control" ng-model="stud.address.district" ng-disabled="!stud.address.state"
+                ng-options="district as district.District_Name for district in districtList|filter:{State_ID:stud.address.state.State_ID}:true |orderBy:'District_Name' track by district.District_ID">
+                <option value="">------Select------</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Address :</b></div>
+        <div class="col-md-4">
+            <textarea ng-model="stud.address.firstline"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Gender :</b></div>
+        <div class="col-md-6">
+            <label class="radio-inline">
+                <input type="radio" name="gender" value="Male" ng-model="stud.gender" required/>Male</label>
+            <label class="radio-inline">
+                <input type="radio" name="gender" value="Female" ng-model="stud.gender" required/>Female</label>
+        </div>
+         <div class="form-group" ng-messages="exampleForm.gender.$error" ng-show="exampleForm.gender.$touched && exampleForm.gender.$invalid">
+            <p ng-message="required">This field is required </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Hobbies :</b></div>
+        <div class="col-md-8">
+            <label class="checkbox-inline" ng-repeat="h in hobbyList">
+                <input type="checkbox"  checklist-model="stud.hobbies" checklist-value="h" >
+                {{h.name}}
+            </label>
+        </div>
+    </div>
+    <br /> 
+
+    <div class="form-group">
+        <div style="height: 30px">
+        </div>
+        <div align="center">
+            <button type="submit" class="btn btn-info" ng-click="newStudent();" ng-disabled="!exampleForm.$valid">
+                New</button>
+            <button type="submit" class="btn btn-success" ng-click="saveStudent()">
+                {{btnName}}
+            </button>
+        </div>
+    </div>
+    <div>
+    </div>
+    </form>
+</div>
